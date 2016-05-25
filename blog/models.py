@@ -1,17 +1,18 @@
-from django.db import models
-
 # Create your models here.
 from django.db import models
 from django.utils import timezone
 from django.contrib.auth.models import User
+from tinymce import models as tinymce_models  
 
+     
 class Post(models.Model):
     author = models.ForeignKey(User)
     title = models.CharField(max_length=200)
-    text = models.TextField()
+	#text = HTMLField(verbose_name='正文',max_length=2000)
+    text = tinymce_models.HTMLField()
+    #text = models.TextField()
     created_date = models.DateTimeField(default=timezone.now)
     published_date = models.DateTimeField(blank=True, null=True)
-
     def publish(self):
         self.published_date = timezone.now()
         self.save()

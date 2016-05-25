@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 	'blog',
+	'tinymce',
 ]
 
 MIDDLEWARE_CLASSES = [
@@ -53,10 +54,18 @@ MIDDLEWARE_CLASSES = [
 
 ROOT_URLCONF = 'mysite.urls'
 
+os.path.join(BASE_DIR,'templates',),
+
+
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [ os.path.join(BASE_DIR, 'mysite/templates'),
+                  os.path.join(BASE_DIR, 'blog/templates'),
+				  os.path.join(BASE_DIR,'blog/templates/upload',),
+                  os.path.join(BASE_DIR,'/static/syntaxhighlighter/styles',),
+                  os.path.join(BASE_DIR,'/static/syntaxhighlighter/scripts/',),
+				  ],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -75,22 +84,22 @@ WSGI_APPLICATION = 'mysite.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/1.9/ref/settings/#databases
 
-#DATABASES = {
- #     'default': {
-  #      'ENGINE': 'django.db.backends.mysql',
-   #     'NAME': 'book',
-    #    'USER':'root',
-     #   'PASSWORD':'admin',
-#        'HOST':'localhost',
- #       'PORT':'3306',
-  #  }
-#}
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+      'default': {
+       'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'book',
+        'USER':'root',
+        'PASSWORD':'admin',
+        'HOST':'localhost',
+        'PORT':'3306',
     }
 }
+#DATABASES = {
+ #   'default': {
+  #      'ENGINE': 'django.db.backends.sqlite3',
+   #     'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+   # }
+#}
 
 
 
@@ -117,7 +126,7 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/1.9/topics/i18n/
 
-LANGUAGE_CODE = 'zh-cn'
+LANGUAGE_CODE = 'zh-hans'
 
 TIME_ZONE = 'Asia/Shanghai'
 
@@ -127,8 +136,31 @@ USE_L10N = True
 
 USE_TZ = True
 
+LOGIN_REDIRECT_URL = '/'
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.9/howto/static-files/
 
 STATIC_URL = '/static/'
+STATICFILES_DIRS = (
+    os.path.join(BASE_DIR, "static"),
+)
+
+
+
+#TEMPLATE_DIRS = ()
+
+TINYMCE_JS_URL='/static/tiny_mce/tiny_mce_src.js'
+TINYMCE_JS_ROOT='/static/tiny_mce/'
+TINYMCE_DEFAULT_CONFIG = {  
+  'plugins': "table,spellchecker,paste,searchreplace,syntaxhl",
+  'theme': 'advanced',   
+  'theme_advanced_buttons3':'syntaxhl',
+  'theme_advanced_toolbar_location' : 'top',  
+  'theme_advanced_toolbar_align' : 'left',   
+  'width': 600,  
+  'height': 400,  
+ }  
+ TINYMCE_SPELLCHECKER = True
+
+
